@@ -1,6 +1,6 @@
 name: signature_kit
 description: A Flutter package for drawing smooth signatures, easy to export image data. 
-version: 0.0.1
+version: 1.0.0
 homepage: https://github.com/haishuangsu/signature_kit.git
 
 platforms:

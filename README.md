@@ -13,6 +13,7 @@ and the Flutter guide for
 
 A Flutter package for drawing smooth signatures, easy to export image data. 
 
+![Screenshot](https://github.com/haishuangsu/signature_kit/blob/master/screenshot/screenshot.gif)
 
 ## Getting started
 

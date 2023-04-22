@@ -62,7 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () async {
                   pngData = await controller.toImage(
-                      pixelRatio: MediaQuery.of(context).devicePixelRatio, format: ImageByteFormat.png);
+                      pixelRatio: MediaQuery.of(context).devicePixelRatio,
+                      format: ImageByteFormat.png);
                   setState(() {});
                 },
                 child: const Text('export'),
@@ -80,8 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            width: double.infinity,
-            height: 300,
+            height: 260,
             child: Signature(controller: controller),
           ),
           const SizedBox(height: 30),

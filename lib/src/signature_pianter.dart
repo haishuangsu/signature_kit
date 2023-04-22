@@ -3,33 +3,31 @@ import 'package:flutter/material.dart';
 class SignaturePainter extends CustomPainter {
   Paint linePaint;
 
-  List<Offset> prePoints;
-  List<Offset> currentPoints;
+  Path path;
+  List<Offset> dots;
+
   final Color bgColor;
   final Color color;
   final double strokeWidth;
 
   SignaturePainter(
-    this.prePoints,
-    this.currentPoints, {
+    this.path,
+    this.dots, {
     required this.color,
     required this.bgColor,
     required this.strokeWidth,
   }) : linePaint = Paint()
           ..color = color
-          ..strokeWidth = strokeWidth;
+          ..strokeWidth = strokeWidth
+          ..style = PaintingStyle.stroke;
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Offset.zero & size, Paint()..color = bgColor);
 
-    for (var i = 0; i < prePoints.length; i++) {
-      if (!size.contains(prePoints[i])) continue;
-      if (prePoints[i] == currentPoints[i]) {
-        canvas.drawCircle(prePoints[i], strokeWidth / 2, linePaint);
-      } else {
-        canvas.drawLine(prePoints[i], currentPoints[i], linePaint);
-      }
+    canvas.drawPath(path, linePaint);
+    for (var dot in dots) {
+      canvas.drawCircle(dot, strokeWidth / 2, linePaint);
     }
   }
 

@@ -32,18 +32,25 @@ class SignatureState extends State<Signature> {
   }
 
   void _downCallBack(PointerDownEvent pointerDownEvent) {
-    widget.controller.prePoints.add(pointerDownEvent.localPosition);
-    widget.controller.currentPoints.add(pointerDownEvent.localPosition);
+    widget.controller.path.moveTo(
+        pointerDownEvent.localPosition.dx, pointerDownEvent.localPosition.dy);
+    widget.controller.path.lineTo(
+        pointerDownEvent.localPosition.dx, pointerDownEvent.localPosition.dy);
     _handleChange();
   }
 
   void _moveCallBack(PointerMoveEvent pointerMoveEvent) {
-    widget.controller.prePoints.add(pointerMoveEvent.localPosition - pointerMoveEvent.delta);
-    widget.controller.currentPoints.add(pointerMoveEvent.localPosition);
+    widget.controller.path.lineTo(
+        pointerMoveEvent.localPosition.dx, pointerMoveEvent.localPosition.dy);
     _handleChange();
   }
 
   void _upCallBack(PointerUpEvent pointerUpEvent) {}
+
+  void _singleTapCallBack(PointerUpEvent pointerUpEvent) {
+    widget.controller.dots.add(pointerUpEvent.localPosition);
+    _handleChange();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,27 +58,33 @@ class SignatureState extends State<Signature> {
       clipBehavior: Clip.antiAlias,
       child: RawGestureDetector(
         gestures: {
-          SinglePointRecognizer: GestureRecognizerFactoryWithHandlers<SinglePointRecognizer>(
+          SinglePointRecognizer:
+              GestureRecognizerFactoryWithHandlers<SinglePointRecognizer>(
             () => SinglePointRecognizer(),
             (instance) {
               instance
                 ..downCallBack = _downCallBack
                 ..moveCallBack = _moveCallBack
-                ..upCallBack = _upCallBack;
+                ..upCallBack = _upCallBack
+                ..singleTapCallBack = _singleTapCallBack;
             },
           )
         },
         child: RepaintBoundary(
           key: widget.controller.signatureKey,
-          child: CustomPaint(
-            size: Size.infinite,
-            painter: SignaturePainter(
-              widget.controller.prePoints,
-              widget.controller.currentPoints,
-              color: widget.controller.color,
-              bgColor: widget.controller.backgroundColor,
-              strokeWidth: widget.controller.strokeWidth,
-            ),
+          child: LayoutBuilder(
+            builder: (context, constrains) {
+              return CustomPaint(
+                size: Size(constrains.maxWidth, constrains.maxHeight),
+                painter: SignaturePainter(
+                  widget.controller.path,
+                  widget.controller.dots,
+                  color: widget.controller.color,
+                  bgColor: widget.controller.backgroundColor,
+                  strokeWidth: widget.controller.strokeWidth,
+                ),
+              );
+            },
           ),
         ),
       ),
