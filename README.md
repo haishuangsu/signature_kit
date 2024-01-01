@@ -13,7 +13,7 @@ and the Flutter guide for
 
 A Flutter package for drawing smooth signatures, easy to export image data. 
 
-![Screenshot](https://github.com/haishuangsu/signature_kit/blob/main/screenshot/screenshot.gif)
+![Screenshot](https://github.com/haishuangsu/signature_kit/blob/main/screenshot/screenshot.gif?raw=true)
 
 ## Getting started
 
@@ -21,7 +21,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```yaml
 dependencies:
-  signature_kit: ^0.0.1
+  signature_kit: ^1.0.1
 ```
 
 
